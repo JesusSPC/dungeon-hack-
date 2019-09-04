@@ -33,79 +33,119 @@ function drawGame() {
   if (!player.processMovement(currentFrameTime)) {
     
     // Standard movements
-    if (pressedUp && (upY == 1 || upY == 3)) {
+    if (pressedUp && upY == tileFloor) {
       movingUp();
-    } else if (pressedDown && (downY == 1 || downY == 3)) {
+    } else if (pressedDown && downY == tileFloor) {
       movingDown();
-    } else if (pressedLeft && (leftX == 1 || leftX == 3)) {
+    } else if (pressedLeft && leftX == tileFloor) {
       movingLeft();
-    } else if (pressedRight && (rightX == 1 || rightX == 3)) {
+    } else if (pressedRight && rightX == tileFloor) {
       movingRight();
     }
 
     // Movements in keys
-    if (pressedUp && upY == 2) {
+    if (pressedUp && upY == tileKey) {
       addKey();
       movingUp();
       tileIntoFloor();
-    } else if (pressedDown && downY == 2) {
+    } else if (pressedDown && downY == tileKey) {
       addKey();
       movingDown();
       tileIntoFloor();
-    } else if (pressedLeft && leftX == 2) {
+    } else if (pressedLeft && leftX == tileKey) {
       addKey();
       movingLeft();
       tileIntoFloor();
-    } else if (pressedRight && rightX == 2) {
+    } else if (pressedRight && rightX == tileKey) {
       addKey();
       movingRight();
       tileIntoFloor();
     }
 
-    // Movements in doors
-    if (pressedUp && upY == 4 && player.keys > 0) {
-      removeKey();
+    // Movements in potions
+    if (pressedUp && upY == tilePotion) {
+      takePotion();
       movingUp();
       tileIntoFloor();
-    } else if (pressedDown && downY == 4 && player.keys > 0) {
-      removeKey();
+    } else if (pressedDown && downY == tilePotion) {
+      takePotion();
       movingDown();
       tileIntoFloor();
-    } else if (pressedLeft && leftX == 4 && player.keys > 0) {
-      removeKey();
+    } else if (pressedLeft && leftX == tilePotion) {
+      takePotion();
       movingLeft();
       tileIntoFloor();
-    } else if (pressedRight && rightX == 4 && player.keys > 0) {
-      removeKey();
+    } else if (pressedRight && rightX == tilePotion) {
+      takePotion();
       movingRight();
       tileIntoFloor();
     }
-
-    if (pressedUp && upY == 5) {
-      movingUp();
-
-    } else if (pressedDown && downY == 5) {
-      movingDown();
    
-    } else if (pressedLeft && leftX == 5) {
+    // Movements in redstones
+    if (pressedUp && upY == tileRedstone) {
+      takeRedStone();
+      movingUp();
+      tileIntoFloor();
+    } else if (pressedDown && downY == tileRedstone) {
+      takeRedStone();
+      movingDown();
+      tileIntoFloor();
+    } else if (pressedLeft && leftX == tileRedstone) {
+      takeRedStone();
       movingLeft();
-     
-    } else if (pressedRight && rightX == 5) {
+      tileIntoFloor();
+    } else if (pressedRight && rightX == tileRedstone) {
+      takeRedStone();
       movingRight();
-    
+      tileIntoFloor();
+    }
+        
+
+    // Movements into doors
+    if (pressedUp && upY == tileDoor && player.keys > 0) {
+      removeKey();
+      movingUp();
+      tileIntoFloor();
+    } else if (pressedDown && downY == tileDoor && player.keys > 0) {
+      removeKey();
+      movingDown();
+      tileIntoFloor();
+    } else if (pressedLeft && leftX == tileDoor && player.keys > 0) {
+      removeKey();
+      movingLeft();
+      tileIntoFloor();
+    } else if (pressedRight && rightX == tileDoor && player.keys > 0) {
+      removeKey();
+      movingRight();
+      tileIntoFloor();
+    }
+
+    // Movements into monsters
+    if (pressedUp && (upY == tileBat || upY == tileSlime || upY == tileSkeleton)) {
+      movingUp();
+      combat();
+    } else if (pressedDown && (downY == tileBat || downY == tileSlime || upY == tileSkeleton)) {
+      movingDown();
+      combat();
+    } else if (pressedLeft && (leftX == tileBat || leftX == tileSlime || upY == tileSkeleton)) {
+      movingLeft();
+      combat();
+    } else if (pressedRight && (rightX == tileBat || rightX == tileSlime || upY == tileSkeleton)) {
+      movingRight();
+      combat();
     }
 
     // Movements in stairs
-    if (pressedUp && upY == 9) {
+    if (pressedUp && upY == tileWin) {
       movingUp();
       alert("You win!");
-    } else if (pressedDown && downY == 9) {
+    } else if (pressedDown && downY == tileWin) {
       movingDown();
       alert("You win!");
-    } else if (pressedLeft && leftX == 9) {
+    } else if (pressedLeft && leftX == tileWin) {
       movingLeft();
       alert("You win!");
-    } else if (pressedRight && rightX == 9) {
+    } else if (pressedRight && rightX == tileWin) {
       movingRight();
       alert("You win!");
     }
@@ -119,27 +159,50 @@ function drawGame() {
   for (var y = 0; y < mapH; y++) {
     for (var x = 0; x < mapW; x++) {
       switch (gameMap[y * mapW + x]) {
-        case 0:
+        case tileWall:
           ctx.drawImage(walls, x * tileW, y * tileH, tileW, tileH);
           break;
-        case 1:
+        case tileFloor:
           ctx.drawImage(floor, x * tileW, y * tileH, tileW, tileH);
           break;
-        case 2:
+        case tileKey:
           ctx.drawImage(floor, x * tileW, y * tileH, tileW, tileH);
           ctx.drawImage(yellowkey, x * tileW, y * tileH, tileW, tileH);
           break;
-        case 4:
+        case tilePotion:
+          ctx.drawImage(floor, x * tileW, y * tileH, tileW, tileH);
+          ctx.drawImage(potion, x * tileW, y * tileH, tileW, tileH);
+          break;
+        case tileDoor:
           ctx.drawImage(doors, x * tileW, y * tileH, tileW, tileH);
           break;
-        case 5:
-          ctx.drawImage(floor, x * tileW, y * tileH, tileW, tileH);
-          ctx.drawImage(bat, x * tileW, y * tileH, tileW, tileH);
-          break;
-        case 9:
+        case tileWin:
           ctx.drawImage(floor, x * tileW, y * tileH, tileW, tileH);
           ctx.drawImage(stairs, x * tileW, y * tileH, tileW, tileH);
+          break
+        case tileRedstone:
+          ctx.drawImage(floor, x * tileW, y * tileH, tileW, tileH);
+          ctx.drawImage(strengthBoost, x * tileW, y * tileH, tileW, tileH);
           break;
+        case tileBluestone:
+          ctx.drawImage(floor, x * tileW, y * tileH, tileW, tileH);
+          ctx.drawImage(defenseBoost, x * tileW, y * tileH, tileW, tileH);
+          break;
+        case tileBat:
+          ctx.drawImage(floor, x * tileW, y * tileH, tileW, tileH);
+          ctx.drawImage(batImg, x * tileW, y * tileH, tileW, tileH);
+          break;
+        case tileSlime:
+          ctx.drawImage(floor, x * tileW, y * tileH, tileW, tileH);
+          ctx.drawImage(redSlimeImg, x * tileW, y * tileH, tileW, tileH);
+          break;
+        case tileSkeleton:
+          ctx.drawImage(floor, x * tileW, y * tileH, tileW, tileH);
+          ctx.drawImage(skeletonImg, x * tileW, y * tileH, tileW, tileH);
+          break;
+        case tileZenos:
+          ctx.drawImage(floor, x * tileW, y * tileH, tileW, tileH);
+          ctx.drawImage(zenosImg, x * tileW, y * tileH, tileW, tileH);
       }
     }
   }

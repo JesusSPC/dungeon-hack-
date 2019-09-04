@@ -1,19 +1,18 @@
-
 class Character {
-  constructor() {
-  this.tileFrom = [9,13];
-  this.tileTo = [9,14];
-  this.tileX = this.tileTo[0];
-  this.tileY = this.tileTo[1];
-  this.dimensions = [37.5, 37.5];
-  this.position = [0, 0];
-  this.timeMoved = 0;
-  this.delayMove = 300;
-  this.keys = 0;
-  this.health = 1000;
-  this.attack = 50;
-  this.defense = 20;
-  }
+  constructor(health, attack, defense,) {
+    this.health = health;
+    this.attack = attack;
+    this.defense = defense;
+    this.tileFrom = [9,13];
+    this.tileTo = [9,14];
+    this.tileX = this.tileTo[0];
+    this.tileY = this.tileTo[1];
+    this.dimensions = [37.5, 37.5];
+    this.position = [0, 0];
+    this.timeMoved = 0;
+    this.delayMove = 300;
+    this.keys = 0;
+    }
   
   get getHealth(){
     return this.health;
@@ -29,6 +28,11 @@ class Character {
 
   inIndex(){
   return toIndex(this.tileTo[0], this.tileTo[1]);
+  }
+
+  isDead(){
+    this.health <= 0;
+    return true;
   }
 
   placeAt(x, y) {
