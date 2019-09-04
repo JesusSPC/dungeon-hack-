@@ -1,10 +1,20 @@
-class Enemies {
-  constructor(ctx, health, attack, defense){
-    this.ctx = null;
+class Enemy {
+  constructor(health, attack, defense){
     this.health = health;
     this.attack = attack;
     this.defense = defense;
+  }
 
+  get getHealth(){
+    return this.health;
+  }
+
+  get getAttack(){
+    return this.attack;
+  }
+
+  get getDefense(){
+    return this.defense;
   }
 
   isDead(){
@@ -17,25 +27,19 @@ class Enemies {
   }
 
   monsterAttack(attack){
-    player.health -= this.attack;
+    player.receiveDamage(attack);
   }
 
 }
 
-class Bats extends Enemies {
-  constructor(){
-    this.health = 200;
-    this.attack = 50;
-    this.defense = 10;
-    super(this.ctx, this.health, this.attack, this.defense)
+class Bat extends Enemy {
+  constructor(health, attack){
+    super(100, 30, 10);
   }
 }
 
-class Slimes extends Enemies {
-  constructor(){
-    this.health = 100;
-    this.attack = 30;
-    this.defense = 10;
-    super(this.ctx, this.health, this.attack, this.defense)
+class Slime extends Enemy {
+  constructor(health, attack){
+    super(50, 20, 15);
   }
 }

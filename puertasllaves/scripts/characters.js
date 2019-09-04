@@ -15,6 +15,18 @@ class Character {
   this.defense = 20;
   }
   
+  get getHealth(){
+    return this.health;
+  }
+
+  get getAttack(){
+    return this.attack;
+  }
+
+  get getDefense(){
+    return this.defense;
+  }
+
   inIndex(){
   return toIndex(this.tileTo[0], this.tileTo[1]);
   }
@@ -26,11 +38,11 @@ class Character {
   }
   
   receiveDamage(damage){
-    this.health -= Enemies;
+    this.health -= damage;
   }
 
-  playerAttack(){
-
+  playerAttack(attack){
+    Enemy.receiveDamage(attack);
   }
 
   processMovement(t) {

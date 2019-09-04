@@ -81,6 +81,20 @@ function drawGame() {
       tileIntoFloor();
     }
 
+    if (pressedUp && upY == 5) {
+      movingUp();
+
+    } else if (pressedDown && downY == 5) {
+      movingDown();
+   
+    } else if (pressedLeft && leftX == 5) {
+      movingLeft();
+     
+    } else if (pressedRight && rightX == 5) {
+      movingRight();
+    
+    }
+
     // Movements in stairs
     if (pressedUp && upY == 9) {
       movingUp();
@@ -117,6 +131,10 @@ function drawGame() {
           break;
         case 4:
           ctx.drawImage(doors, x * tileW, y * tileH, tileW, tileH);
+          break;
+        case 5:
+          ctx.drawImage(floor, x * tileW, y * tileH, tileW, tileH);
+          ctx.drawImage(bat, x * tileW, y * tileH, tileW, tileH);
           break;
         case 9:
           ctx.drawImage(floor, x * tileW, y * tileH, tileW, tileH);

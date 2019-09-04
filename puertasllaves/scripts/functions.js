@@ -48,3 +48,6 @@ walls.src = "./img/wall.png"
 
 let warrior1 = new Image()
 warrior1.src = "./img/warrior1.png"
+
+let bat = new Image()
+bat.src = "./img/bat.png"
