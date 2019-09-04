@@ -8,7 +8,7 @@ class Enemies {
   }
 
   isDead(){
-    this.health >= 0;
+    this.health <= 0;
     return true;
   }
 
@@ -16,8 +16,8 @@ class Enemies {
     this.health -= damage;
   }
 
-  monsterAttack(){
-
+  monsterAttack(attack){
+    player.health -= this.attack;
   }
 
 }

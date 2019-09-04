@@ -1,34 +1,14 @@
-let doors = new Image()
-doors.src = "./img/door.png";
 
-let floor = new Image()
-floor.src = "./img/floor.png"
-
-let yellowkey = new Image()
-yellowkey.src = "./img/yellowkey.png"
-
-let stairs = new Image()
-stairs.src = "./img/stairs.png"
-
-let walls = new Image()
-walls.src = "./img/wall.png"
-
-let warrior1 = new Image()
-warrior1.src = "./img/warrior1.png"
 
 function drawGame() {
 
-  // if (ctx == null) {
-  //   return;
-  // }
-
-
+  if (ctx == null) {
+    return;
+  }
 
   var currentFrameTime = Date.now();
-  // var timeElapsed = currentFrameTime - lastFrameTime;
-
   var sec = Math.floor(Date.now() / 1000);
-
+  // var timeElapsed = currentFrameTime - lastFrameTime;
 
   if (sec != currentSecond) {
     currentSecond = sec;
@@ -38,99 +18,90 @@ function drawGame() {
     frameCount++;
   }
 
+  // 4 directions from the character
+  let upY = gameMap[toIndex(player.tileFrom[0], player.tileFrom[1] - 1)];
+  let downY = gameMap[toIndex(player.tileFrom[0], player.tileFrom[1] + 1)];
+  let leftX = gameMap[toIndex(player.tileFrom[0] - 1, player.tileFrom[1])];
+  let rightX = gameMap[toIndex(player.tileFrom[0] + 1, player.tileFrom[1])];
+  // Pressing the arrow keys
+  let pressedUp = keysDown[38] && player.tileFrom[1] > 0;
+  let pressedDown = keysDown[40] && player.tileFrom[1] < mapH - 1;
+  let pressedLeft = keysDown[37] && player.tileFrom[0] > 0;
+  let pressedRight = keysDown[39] && player.tileFrom[0] < mapW - 1;
+
+
   if (!player.processMovement(currentFrameTime)) {
     
-    let upY = gameMap[toIndex(player.tileFrom[0], player.tileFrom[1] - 1)];
-    let downY = gameMap[toIndex(player.tileFrom[0], player.tileFrom[1] + 1)];
-    let leftX = gameMap[toIndex(player.tileFrom[0] - 1, player.tileFrom[1])];
-    let rightX = gameMap[toIndex(player.tileFrom[0] + 1, player.tileFrom[1])];
-
-    if (keysDown[38] && player.tileFrom[1] > 0 && (upY == 1 || upY == 3)) {
-      player.tileTo[1] -= 1;
-    } else if (
-      keysDown[40] && player.tileFrom[1] < mapH - 1 && (downY == 1 || downY == 3)) {
-      player.tileTo[1] += 1;
-    } else if (
-      keysDown[37] && player.tileFrom[0] > 0 && (leftX == 1 || leftX == 3)) {
-      player.tileTo[0] -= 1;
-    } else if (
-      keysDown[39] && player.tileFrom[0] < mapW - 1 && (rightX == 1 || rightX == 3)) {
-      player.tileTo[0] += 1;
+    // Standard movements
+    if (pressedUp && (upY == 1 || upY == 3)) {
+      movingUp();
+    } else if (pressedDown && (downY == 1 || downY == 3)) {
+      movingDown();
+    } else if (pressedLeft && (leftX == 1 || leftX == 3)) {
+      movingLeft();
+    } else if (pressedRight && (rightX == 1 || rightX == 3)) {
+      movingRight();
     }
 
-    if (keysDown[38] && player.tileFrom[1] > 0 && upY == 2) {
-      player.keys += 1;
-      player.tileTo[1] -= 1;
-      gameMap[player.inIndex()] = 1;
-    } else if (keysDown[40] && player.tileFrom[1] < mapH - 1 && downY == 2) {
-      player.keys += 1;
-      player.tileTo[1] += 1;
-      gameMap[player.inIndex()] = 1;
-    } else if (keysDown[37] && player.tileFrom[0] > 0 && leftX == 2) {
-      player.keys += 1;
-      player.tileTo[0] -= 1;
-      gameMap[player.inIndex()] = 1;
-    } else if (keysDown[39] && player.tileFrom[0] < mapW - 1 && rightX == 2) {
-      player.keys += 1;
-      player.tileTo[0] += 1;
-      gameMap[player.inIndex()] = 1;
+    // Movements in keys
+    if (pressedUp && upY == 2) {
+      addKey();
+      movingUp();
+      tileIntoFloor();
+    } else if (pressedDown && downY == 2) {
+      addKey();
+      movingDown();
+      tileIntoFloor();
+    } else if (pressedLeft && leftX == 2) {
+      addKey();
+      movingLeft();
+      tileIntoFloor();
+    } else if (pressedRight && rightX == 2) {
+      addKey();
+      movingRight();
+      tileIntoFloor();
     }
 
-    if (keysDown[38] && player.tileFrom[1] > 0 && upY == 4 && player.keys > 0) {
-      player.keys -= 1;
-      player.tileTo[1] -= 1;
-      gameMap[player.inIndex()] = 1;
-    } else if (
-      keysDown[40] &&
-      player.tileFrom[1] < mapH - 1 &&
-      downY == 4 &&
-      player.keys > 0
-    ) {
-      player.keys -= 1;
-      player.tileTo[1] += 1;
-      gameMap[player.inIndex()] = 1;
-    } else if (
-      keysDown[37] &&
-      player.tileFrom[0] > 0 &&
-      leftX == 4 &&
-      player.keys > 0
-    ) {
-      player.keys -= 1;
-      player.tileTo[0] -= 1;
-      gameMap[player.inIndex()] = 1;
-    } else if (
-      keysDown[39] &&
-      player.tileFrom[0] < mapW - 1 &&
-      rightX == 4 &&
-      player.keys > 0
-    ) {
-      player.keys -= 1;
-      player.tileTo[0] += 1;
-      gameMap[player.inIndex()] = 1;
+    // Movements in doors
+    if (pressedUp && upY == 4 && player.keys > 0) {
+      removeKey();
+      movingUp();
+      tileIntoFloor();
+    } else if (pressedDown && downY == 4 && player.keys > 0) {
+      removeKey();
+      movingDown();
+      tileIntoFloor();
+    } else if (pressedLeft && leftX == 4 && player.keys > 0) {
+      removeKey();
+      movingLeft();
+      tileIntoFloor();
+    } else if (pressedRight && rightX == 4 && player.keys > 0) {
+      removeKey();
+      movingRight();
+      tileIntoFloor();
     }
 
-    if (keysDown[38] && player.tileFrom[1] > 0 && upY == 9) {
-      player.tileTo[1] -= 1;
+    // Movements in stairs
+    if (pressedUp && upY == 9) {
+      movingUp();
       alert("You win!");
-    } else if (keysDown[40] && player.tileFrom[1] < mapH - 1 && downY == 9) {
-      player.tileTo[1] += 1;
+    } else if (pressedDown && downY == 9) {
+      movingDown();
       alert("You win!");
-    } else if (keysDown[37] && player.tileFrom[0] > 0 && leftX == 9) {
-      player.tileTo[0] -= 1;
+    } else if (pressedLeft && leftX == 9) {
+      movingLeft();
       alert("You win!");
-    } else if (keysDown[39] && player.tileFrom[0] < mapW - 1 && rightX == 9) {
-      player.tileTo[0] += 1;
+    } else if (pressedRight && rightX == 9) {
+      movingRight();
       alert("You win!");
     }
 
-    if (
-      player.tileFrom[0] != player.tileTo[0] ||
-      player.tileFrom[1] != player.tileTo[1]
-    ) {
+    if (player.tileFrom[0] != player.tileTo[0] || player.tileFrom[1] != player.tileTo[1]) {
       player.timeMoved = currentFrameTime;
     }
   }
 
+  // Painting Tiles
   for (var y = 0; y < mapH; y++) {
     for (var x = 0; x < mapW; x++) {
       switch (gameMap[y * mapW + x]) {

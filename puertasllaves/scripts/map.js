@@ -44,8 +44,3 @@ const tilePotion = 3;
 const tileDoor = 4;
 const tileMonster = 5;
 const tileWin = 9;
-
-function toIndex(x, y){
-  return ((y * mapW) + x);
-  }
-  

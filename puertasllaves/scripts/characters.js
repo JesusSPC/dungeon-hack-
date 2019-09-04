@@ -8,7 +8,7 @@ class Character {
   this.dimensions = [37.5, 37.5];
   this.position = [0, 0];
   this.timeMoved = 0;
-  this.delayMove = 500;
+  this.delayMove = 300;
   this.keys = 0;
   this.health = 1000;
   this.attack = 50;
@@ -25,10 +25,19 @@ class Character {
   this.position = [((tileW * x) + ((tileW - this.dimensions[0]) / 2)), ((tileH * y) + ((tileH - this.dimensions[1]) / 2))]
   }
   
+  receiveDamage(damage){
+    this.health -= Enemies;
+  }
+
+  playerAttack(){
+
+  }
+
   processMovement(t) {
   if (this.tileFrom[0] == this.tileTo[0] && this.tileFrom[1] == this.tileTo[1]){
   return false;
   }
+
   if ((t - this.timeMoved) >= this.delayMove){
   this.placeAt(this.tileTo[0], this.tileTo[1]);
   } else {
