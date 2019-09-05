@@ -1,5 +1,5 @@
 class Character {
-  constructor(health, attack, defense,) {
+  constructor(health, attack, defense) {
     this.health = health;
     this.attack = attack;
     this.defense = defense;

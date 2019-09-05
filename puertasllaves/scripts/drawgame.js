@@ -1,5 +1,5 @@
 
-
+let countPressed = false
 function drawGame() {
 
   if (ctx == null) {
@@ -28,7 +28,7 @@ function drawGame() {
   let pressedDown = keysDown[40] && player.tileFrom[1] < mapH - 1;
   let pressedLeft = keysDown[37] && player.tileFrom[0] > 0;
   let pressedRight = keysDown[39] && player.tileFrom[0] < mapW - 1;
-
+ 
 
   if (!player.processMovement(currentFrameTime)) {
     
@@ -42,97 +42,87 @@ function drawGame() {
     } else if (pressedRight && rightX == tileFloor) {
       movingRight();
     }
-
-    // Movements in keys
-    if (pressedUp && upY == tileKey) {
-      addKey();
+    
+    // Movements in potions, stones, keys and doors
+    if (pressedUp && (upY == tilePotion || upY == tileRedstone || upY == tileBluestone || upY == tileDoor && player.keys > 0 || upY == tileKey)) {
+      if(upY == tilePotion){
+        takePotion();
+      } else if (upY == tileRedstone){
+        takeRedStone();
+      } else if (upY == tileBluestone){
+        takeBlueStone();
+      } else if (upY == tileKey) {
+        addKey();
+      } else if (upY == tileDoor) {
+        removeKey();
+      }
       movingUp();
       tileIntoFloor();
-    } else if (pressedDown && downY == tileKey) {
-      addKey();
+    } else if (pressedDown && (downY == tilePotion || downY == tileRedstone || downY == tileBluestone || downY == tileDoor && player.keys > 0 || downY == tileKey)) {
+      if(downY == tilePotion){
+        takePotion();
+      } else if (downY == tileRedstone){
+        takeRedStone();
+      } else if (downY == tileBluestone){
+        takeBlueStone();
+      } else if (downY == tileKey) {
+        addKey();
+      } else if (downY == tileDoor) {
+        removeKey();
+      }
       movingDown();
       tileIntoFloor();
-    } else if (pressedLeft && leftX == tileKey) {
-      addKey();
+    } else if (pressedLeft && (leftX == tilePotion || leftX == tileRedstone || leftX == tileBluestone || leftX == tileDoor && player.keys > 0 || leftX == tileKey)) {
+      if(leftX == tilePotion){
+        takePotion();
+      } else if (leftX == tileRedstone){
+        takeRedStone();
+      } else if (leftX == tileBluestone){
+        takeBlueStone();
+      } else if (leftX == tileKey) {
+        addKey();
+      } else if (leftX == tileDoor) {
+        removeKey();
+      }
       movingLeft();
       tileIntoFloor();
-    } else if (pressedRight && rightX == tileKey) {
-      addKey();
-      movingRight();
-      tileIntoFloor();
-    }
-
-    // Movements in potions
-    if (pressedUp && upY == tilePotion) {
-      takePotion();
-      movingUp();
-      tileIntoFloor();
-    } else if (pressedDown && downY == tilePotion) {
-      takePotion();
-      movingDown();
-      tileIntoFloor();
-    } else if (pressedLeft && leftX == tilePotion) {
-      takePotion();
-      movingLeft();
-      tileIntoFloor();
-    } else if (pressedRight && rightX == tilePotion) {
-      takePotion();
-      movingRight();
-      tileIntoFloor();
-    }
-   
-    // Movements in redstones
-    if (pressedUp && upY == tileRedstone) {
-      takeRedStone();
-      movingUp();
-      tileIntoFloor();
-    } else if (pressedDown && downY == tileRedstone) {
-      takeRedStone();
-      movingDown();
-      tileIntoFloor();
-    } else if (pressedLeft && leftX == tileRedstone) {
-      takeRedStone();
-      movingLeft();
-      tileIntoFloor();
-    } else if (pressedRight && rightX == tileRedstone) {
-      takeRedStone();
-      movingRight();
-      tileIntoFloor();
-    }
-        
-
-    // Movements into doors
-    if (pressedUp && upY == tileDoor && player.keys > 0) {
-      removeKey();
-      movingUp();
-      tileIntoFloor();
-    } else if (pressedDown && downY == tileDoor && player.keys > 0) {
-      removeKey();
-      movingDown();
-      tileIntoFloor();
-    } else if (pressedLeft && leftX == tileDoor && player.keys > 0) {
-      removeKey();
-      movingLeft();
-      tileIntoFloor();
-    } else if (pressedRight && rightX == tileDoor && player.keys > 0) {
-      removeKey();
+    } else if (pressedRight && (rightX == tilePotion || rightX == tileRedstone || rightX == tileBluestone || rightX == tileDoor && player.keys > 0 || rightX == tileKey)) {
+      if(rightX == tilePotion){
+        takePotion();
+      } else if (rightX == tileRedstone){
+        takeRedStone();
+      } else if (rightX == tileBluestone){
+        takeBlueStone();
+      } else if (rightX == tileKey) {
+        addKey();
+      } else if (rightX == tileDoor) {
+        removeKey();
+      }      
       movingRight();
       tileIntoFloor();
     }
 
     // Movements into monsters
     if (pressedUp && (upY == tileBat || upY == tileSlime || upY == tileSkeleton)) {
-      movingUp();
-      combat();
-    } else if (pressedDown && (downY == tileBat || downY == tileSlime || upY == tileSkeleton)) {
-      movingDown();
-      combat();
-    } else if (pressedLeft && (leftX == tileBat || leftX == tileSlime || upY == tileSkeleton)) {
-      movingLeft();
-      combat();
-    } else if (pressedRight && (rightX == tileBat || rightX == tileSlime || upY == tileSkeleton)) {
-      movingRight();
-      combat();
+      keysDown[38] = false;
+      if (!keysDown[38]){
+         combatUp()
+      }      
+    } else if (pressedDown && (downY == tileBat || downY == tileSlime || downY == tileSkeleton)) {
+      keysDown[40] = false;
+      if (!keysDown[40]){
+         combatDown()
+      }
+    } else if (pressedLeft && (leftX == tileBat || leftX == tileSlime || leftX == tileSkeleton)) {
+      keysDown[37] = false;
+      if (!keysDown[37]){
+         combatLeft()
+      }
+    } else if (pressedRight && (rightX == tileBat || rightX == tileSlime || rightX == tileSkeleton)) {
+      keysDown[39] = false;
+      if (!keysDown[39]){
+         combatRight()
+      }
     }
 
     // Movements in stairs
@@ -211,6 +201,7 @@ function drawGame() {
 
   ctx.fillStyle = "#ff0000";
   ctx.fillText("FPS: " + framesLastSecond, 10, 20);
+  
 
   lastFrameTime = currentFrameTime;
   requestAnimationFrame(drawGame);

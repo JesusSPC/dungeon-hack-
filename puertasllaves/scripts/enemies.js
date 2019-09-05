@@ -6,7 +6,7 @@ class Enemy extends Character{
 
 class Slime extends Enemy {
   constructor(x, y){
-    super(50, 20, 15);
+    super(35, 25, 0);
     this.tileX = x;
     this.tileY = y;
   }
@@ -22,7 +22,7 @@ class Bat extends Enemy {
 
 class Skeleton extends Enemy {
   constructor(x, y){
-    super(150, 40, 25);
+    super(150, 30, 20);
     this.tileX = x;
     this.tileY = y;
   }
