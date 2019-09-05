@@ -1,5 +1,3 @@
-
-let countPressed = false
 function drawGame() {
 
   if (ctx == null) {
@@ -103,22 +101,22 @@ function drawGame() {
     }
 
     // Movements into monsters
-    if (pressedUp && (upY == tileBat || upY == tileSlime || upY == tileSkeleton)) {
+    if (pressedUp && (upY == tileBat || upY == tileSlime || upY == tileSkeleton || upY == tileZenos)) {
       keysDown[38] = false;
       if (!keysDown[38]){
          combatUp()
       }      
-    } else if (pressedDown && (downY == tileBat || downY == tileSlime || downY == tileSkeleton)) {
+    } else if (pressedDown && (downY == tileBat || downY == tileSlime || downY == tileSkeleton || downY == tileZenos)) {
       keysDown[40] = false;
       if (!keysDown[40]){
          combatDown()
       }
-    } else if (pressedLeft && (leftX == tileBat || leftX == tileSlime || leftX == tileSkeleton)) {
+    } else if (pressedLeft && (leftX == tileBat || leftX == tileSlime || leftX == tileSkeleton || leftX == tileZenos)) {
       keysDown[37] = false;
       if (!keysDown[37]){
          combatLeft()
       }
-    } else if (pressedRight && (rightX == tileBat || rightX == tileSlime || rightX == tileSkeleton)) {
+    } else if (pressedRight && (rightX == tileBat || rightX == tileSlime || rightX == tileSkeleton || rightX == tileZenos)) {
       keysDown[39] = false;
       if (!keysDown[39]){
          combatRight()
@@ -152,6 +150,12 @@ function drawGame() {
         case tileWall:
           ctx.drawImage(walls, x * tileW, y * tileH, tileW, tileH);
           break;
+        // case tileBottom1:
+        //   ctx.drawImage(wallBottom1, x * tileW, y * tileH, tileW, tileH);
+        //   break;
+        // case tileLeft1:
+        //   ctx.drawImage(wallLeft1, x * tileW, y * tileH, tileW, tileH);
+        //   break;
         case tileFloor:
           ctx.drawImage(floor, x * tileW, y * tileH, tileW, tileH);
           break;
@@ -193,6 +197,7 @@ function drawGame() {
         case tileZenos:
           ctx.drawImage(floor, x * tileW, y * tileH, tileW, tileH);
           ctx.drawImage(zenosImg, x * tileW, y * tileH, tileW, tileH);
+          break;
       }
     }
   }

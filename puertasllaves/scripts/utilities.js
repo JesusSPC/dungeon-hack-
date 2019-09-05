@@ -47,8 +47,25 @@ function takeBlueStone(){
   player.defense += 5;
 }
 
+function gameOver() {
+  resetGame();
+}
+
+function resetGame() {
+  player.keys = 0;
+  player.health = 200;
+  player.attack = 20;
+  player.defense = 10;
+  player.tileFrom = [9,13];
+  player.tileTo = [9,14];
+  gameMap = Array.from(gameMapBackup);
+  army = [];
+  generateArmy();
+
+}
+
 function combatUp(){
-  army.filter(ele => ele.tileX == player.tileTo[0] && ele.tileY == (player.tileTo[1] - 1)).forEach(elem => elem.health -= player.attack);
+  army.filter(ele => ele.tileX == player.tileTo[0] && ele.tileY == (player.tileTo[1] - 1)).forEach(elem => elem.health -= (player.attack - elem.defense));
   army.forEach((el, index) => {
   if (el.health <= 0) {
     movingUp()
@@ -58,18 +75,17 @@ function combatUp(){
   }
   })
   
-  army.filter(ele => ele.tileX == player.tileTo[0] && ele.tileY == (player.tileTo[1] - 1)).forEach(elem => player.health -= elem.attack);
+  army.filter(ele => ele.tileX == player.tileTo[0] && ele.tileY == (player.tileTo[1] - 1)).forEach(elem => player.health -= (elem.attack - player.defense));
   if (player.health <= 0) {
-    return console.log("GAME OVER BITCH");
+    return gameOver();
   } else {
     console.log(`Sir Boolean: ${player.health} HP`)
-    army.filter(ele => ele.tileX == player.tileTo[0] && ele.tileY == player.tileTo[1]).forEach(elem => console.log(elem.health));
   }
 
 }
 
 function combatDown(){
-  army.filter(ele => ele.tileX == player.tileTo[0] && ele.tileY == (player.tileTo[1] + 1)).forEach(elem => elem.health -= player.attack);
+  army.filter(ele => ele.tileX == player.tileTo[0] && ele.tileY == (player.tileTo[1] + 1)).forEach(elem => elem.health -= (player.attack - elem.defense));
   army.forEach((el, index) => {
   if (el.health <= 0) {
     movingDown()
@@ -79,18 +95,17 @@ function combatDown(){
   }
   })
   
-  army.filter(ele => ele.tileX == player.tileTo[0] && ele.tileY == (player.tileTo[1] + 1)).forEach(elem => player.health -= elem.attack);
+  army.filter(ele => ele.tileX == player.tileTo[0] && ele.tileY == (player.tileTo[1] + 1)).forEach(elem => player.health -= (elem.attack - player.defense));
   if (player.health <= 0) {
-    return console.log("GAME OVER BITCH");
+    return gameOver();
   } else {
     console.log(`Sir Boolean: ${player.health} HP`)
-    army.filter(ele => ele.tileX == player.tileTo[0] && ele.tileY == player.tileTo[1]).forEach(elem => console.log(elem.health));
   }
 
 }
 
 function combatLeft(){
-  army.filter(ele => ele.tileX == (player.tileTo[0] - 1) && ele.tileY == player.tileTo[1]).forEach(elem => elem.health -= player.attack);
+  army.filter(ele => ele.tileX == (player.tileTo[0] - 1) && ele.tileY == player.tileTo[1]).forEach(elem => elem.health -= (player.attack - elem.defense));
   army.forEach((el, index) => {
   if (el.health <= 0) {
     movingLeft()
@@ -100,18 +115,17 @@ function combatLeft(){
   }
   })
   
-  army.filter(ele => ele.tileX == (player.tileTo[0] - 1) && ele.tileY == player.tileTo[1]).forEach(elem => player.health -= elem.attack);
+  army.filter(ele => ele.tileX == (player.tileTo[0] - 1) && ele.tileY == player.tileTo[1]).forEach(elem => player.health -= (elem.attack - player.defense));
   if (player.health <= 0) {
-    return console.log("GAME OVER BITCH");
+    return gameOver();
   } else {
     console.log(`Sir Boolean: ${player.health} HP`)
-    army.filter(ele => ele.tileX == player.tileTo[0] && ele.tileY == player.tileTo[1]).forEach(elem => console.log(elem.health));
   }
 
 }
 
 function combatRight(){
-  army.filter(ele => ele.tileX == (player.tileTo[0] + 1) && ele.tileY == player.tileTo[1]).forEach(elem => elem.health -= player.attack);
+  army.filter(ele => ele.tileX == (player.tileTo[0] + 1) && ele.tileY == player.tileTo[1]).forEach(elem => elem.health -= (player.attack - elem.defense));
   army.forEach((el, index) => {
   if (el.health <= 0) {
     movingRight()
@@ -121,14 +135,12 @@ function combatRight(){
   }
   })
   
-  army.filter(ele => ele.tileX == player.tileTo[0] + 1 && ele.tileY == player.tileTo[1]).forEach(elem => player.health -= elem.attack);
+  army.filter(ele => ele.tileX == player.tileTo[0] + 1 && ele.tileY == player.tileTo[1]).forEach(elem => player.health -= (elem.attack - player.defense));
   if (player.health <= 0) {
-    return console.log("GAME OVER BITCH");
+    return gameOver();
   } else {
     console.log(`Sir Boolean: ${player.health} HP`)
-    army.filter(ele => ele.tileX == player.tileTo[0] && ele.tileY == player.tileTo[1]).forEach(elem => console.log(elem.health));
   }
-
 }
 
 let doors = new Image()
@@ -154,6 +166,12 @@ defenseBoost.src = "./img/bluestone.png"
 
 let walls = new Image()
 walls.src = "./img/wall.png"
+
+// let wallBottom1 = new Image()
+// wallBottom1.src = "./img/walls/wallbottom2.png"
+
+// let wallLeft1 = new Image()
+// wallLeft1.src = "./img/walls/wallleft3.png"
 
 let warrior1 = new Image()
 warrior1.src = "./img/warrior1.png"

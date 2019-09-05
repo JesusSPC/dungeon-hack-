@@ -28,6 +28,14 @@ class Skeleton extends Enemy {
   }
 }
 
+class Zombie extends Enemy {
+  constructor(x, y){
+    super(200, 40, 30);
+    this.tileX = x;
+    this.tileY = y;
+  }
+}
+
 class Zenos extends Enemy {
   constructor(x, y){
     super(450, 60, 30);

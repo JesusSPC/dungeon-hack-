@@ -59,6 +59,8 @@ let gameMap = [
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 ];
 
+let gameMapBackup = Array.from(gameMap)
+
 const tileWall = 0;
 const tileFloor = 1;
 const tileKey = 2;
@@ -71,6 +73,8 @@ const tileBat = 8;
 const tileSlime = 9;
 const tileSkeleton = 10;
 const tileZenos = 11;
+const tileLeft1 = 98;
+const tileBottom1 = 99;
 
 generateArmy();
 
