@@ -1,17 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title>TitleGame</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Dungeon Hack</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+
+  </head>
+  <body>
+    <div id="fondo">
+      <img id="imagen" src="./img/fondo.png" alt="Fondo">
+      <button class="buttons" onclick="borrarFondo()">Press Start</button>     
+    </div>
+    <div id="gamebar">
+      <ul id="stats">
+        <li class="list"><span id="name">Sir Boolean</span></li>
+        <li class="list"><span id="lifepoints">0</span></li>
+        <li class="list"><span id="atkpower">0</span></li>
+        <li class="list"><span id="defpower">0</span></li>
+        <li class="list"><span id="keys">0</span></li>
+      </ul>
+      <img id="sidebar" src="./img/Left.png" alt="Sidebar">
+      <canvas id="game" width="800" height="800"></canvas>
     <script src="./scripts/characters.js"></script>
     <script src="./scripts/enemies.js"></script>
     <script src="./scripts/map.js"></script>
     <script src="./scripts/utilities.js"></script>
     <script src="./scripts/drawgame.js"></script>
     <script src="./scripts/onload.js"></script>
-  </head>
- <body>
-
-<canvas id="game" width="800" height="800"></canvas>
-
   </body>
 </html>

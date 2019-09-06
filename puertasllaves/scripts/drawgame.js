@@ -1,3 +1,18 @@
+// let intervalId = setInterval(() => {
+//   ctx = document.getElementById("fondos").getContext("2d");
+//   ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+//   ctx.drawImage(background, 0, 0, window.innerWidth, window.innerHeight);
+//   document.body.onkeypress = function(e){
+//   if(e.keyCode == 32){
+//     ctx = document.getElementById('game').getContext('2d');
+//     requestAnimationFrame(drawGame);
+//     ctx.font = "bold 10pt sans-serif";
+//     clearInterval(intervalId);
+//   }
+// }
+// }, 10)
+
+
 function drawGame() {
 
   if (ctx == null) {
@@ -41,8 +56,8 @@ function drawGame() {
       movingRight();
     }
     
-    // Movements in potions, stones, keys and doors
-    if (pressedUp && (upY == tilePotion || upY == tileRedstone || upY == tileBluestone || upY == tileDoor && player.keys > 0 || upY == tileKey)) {
+    // Movements in potions, stones, keys, doors, sword
+    if (pressedUp && (upY == tilePotion || upY == tileRedstone || upY == tileBluestone || upY == tileDoor && player.keys > 0 || upY == tileKey || upY == tileSword)) {
       if(upY == tilePotion){
         takePotion();
       } else if (upY == tileRedstone){
@@ -53,10 +68,12 @@ function drawGame() {
         addKey();
       } else if (upY == tileDoor) {
         removeKey();
+      } else if (upY == tileSword) {
+        getSword();
       }
       movingUp();
       tileIntoFloor();
-    } else if (pressedDown && (downY == tilePotion || downY == tileRedstone || downY == tileBluestone || downY == tileDoor && player.keys > 0 || downY == tileKey)) {
+    } else if (pressedDown && (downY == tilePotion || downY == tileRedstone || downY == tileBluestone || downY == tileDoor && player.keys > 0 || downY == tileKey || downY == tileSword)) {
       if(downY == tilePotion){
         takePotion();
       } else if (downY == tileRedstone){
@@ -67,10 +84,12 @@ function drawGame() {
         addKey();
       } else if (downY == tileDoor) {
         removeKey();
+      } else if (downY == tileSword) {
+        getSword();
       }
       movingDown();
       tileIntoFloor();
-    } else if (pressedLeft && (leftX == tilePotion || leftX == tileRedstone || leftX == tileBluestone || leftX == tileDoor && player.keys > 0 || leftX == tileKey)) {
+    } else if (pressedLeft && (leftX == tilePotion || leftX == tileRedstone || leftX == tileBluestone || leftX == tileDoor && player.keys > 0 || leftX == tileKey || leftX == tileSword)) {
       if(leftX == tilePotion){
         takePotion();
       } else if (leftX == tileRedstone){
@@ -81,10 +100,12 @@ function drawGame() {
         addKey();
       } else if (leftX == tileDoor) {
         removeKey();
+      } else if (leftX == tileSword) {
+        getSword();
       }
       movingLeft();
       tileIntoFloor();
-    } else if (pressedRight && (rightX == tilePotion || rightX == tileRedstone || rightX == tileBluestone || rightX == tileDoor && player.keys > 0 || rightX == tileKey)) {
+    } else if (pressedRight && (rightX == tilePotion || rightX == tileRedstone || rightX == tileBluestone || rightX == tileDoor && player.keys > 0 || rightX == tileKey || rightX == tileSword)) {
       if(rightX == tilePotion){
         takePotion();
       } else if (rightX == tileRedstone){
@@ -95,45 +116,47 @@ function drawGame() {
         addKey();
       } else if (rightX == tileDoor) {
         removeKey();
-      }      
+      } else if (rightX == tileSword) {
+        getSword();
+      }
       movingRight();
       tileIntoFloor();
     }
 
     // Movements into monsters
-    if (pressedUp && (upY == tileBat || upY == tileSlime || upY == tileSkeleton || upY == tileZenos)) {
+    if (pressedUp && (upY == tileBat || upY == tileSlime || upY == tileSkeleton || upY == tileZenos || upY == tileWizard || upY == tileKnight || upY == tileDarkKnight)) {
       keysDown[38] = false;
       if (!keysDown[38]){
          combatUp()
       }      
-    } else if (pressedDown && (downY == tileBat || downY == tileSlime || downY == tileSkeleton || downY == tileZenos)) {
+    } else if (pressedDown && (downY == tileBat || downY == tileSlime || downY == tileSkeleton || downY == tileZenos || downY == tileWizard || downY == tileKnight || downY == tileDarkKnight)) {
       keysDown[40] = false;
       if (!keysDown[40]){
          combatDown()
       }
-    } else if (pressedLeft && (leftX == tileBat || leftX == tileSlime || leftX == tileSkeleton || leftX == tileZenos)) {
+    } else if (pressedLeft && (leftX == tileBat || leftX == tileSlime || leftX == tileSkeleton || leftX == tileZenos || leftX == tileWizard || leftX == tileKnight || leftX == tileDarkKnight)) {
       keysDown[37] = false;
       if (!keysDown[37]){
          combatLeft()
       }
-    } else if (pressedRight && (rightX == tileBat || rightX == tileSlime || rightX == tileSkeleton || rightX == tileZenos)) {
+    } else if (pressedRight && (rightX == tileBat || rightX == tileSlime || rightX == tileSkeleton || rightX == tileZenos || rightX == tileWizard || rightX == tileKnight || rightX == tileDarkKnight)) {
       keysDown[39] = false;
       if (!keysDown[39]){
          combatRight()
       }
     }
 
-    // Movements in stairs
-    if (pressedUp && upY == tileWin) {
+    // Movements in princess
+    if (pressedUp && upY == tilePrincess) {
       movingUp();
       alert("You win!");
-    } else if (pressedDown && downY == tileWin) {
+    } else if (pressedDown && downY == tilePrincess) {
       movingDown();
       alert("You win!");
-    } else if (pressedLeft && leftX == tileWin) {
+    } else if (pressedLeft && leftX == tilePrincess) {
       movingLeft();
       alert("You win!");
-    } else if (pressedRight && rightX == tileWin) {
+    } else if (pressedRight && rightX == tilePrincess) {
       movingRight();
       alert("You win!");
     }
@@ -156,6 +179,10 @@ function drawGame() {
         // case tileLeft1:
         //   ctx.drawImage(wallLeft1, x * tileW, y * tileH, tileW, tileH);
         //   break;
+        case tilePrincess:
+          ctx.drawImage(floor, x * tileW, y * tileH, tileW, tileH);
+          ctx.drawImage(princessImg, x * tileW, y * tileH, tileW, tileH);
+          break;
         case tileFloor:
           ctx.drawImage(floor, x * tileW, y * tileH, tileW, tileH);
           break;
@@ -169,6 +196,10 @@ function drawGame() {
           break;
         case tileDoor:
           ctx.drawImage(doors, x * tileW, y * tileH, tileW, tileH);
+          break;
+        case tileSword:
+          ctx.drawImage(floor, x * tileW, y * tileH, tileW, tileH);
+          ctx.drawImage(swordImg, x * tileW, y * tileH, tileW, tileH);
           break;
         case tileWin:
           ctx.drawImage(floor, x * tileW, y * tileH, tileW, tileH);
@@ -194,6 +225,18 @@ function drawGame() {
           ctx.drawImage(floor, x * tileW, y * tileH, tileW, tileH);
           ctx.drawImage(skeletonImg, x * tileW, y * tileH, tileW, tileH);
           break;
+        case tileWizard:
+          ctx.drawImage(floor, x * tileW, y * tileH, tileW, tileH);
+          ctx.drawImage(wizardImg, x * tileW, y * tileH, tileW, tileH);
+          break;
+        case tileKnight:
+          ctx.drawImage(floor, x * tileW, y * tileH, tileW, tileH);
+          ctx.drawImage(knightImg, x * tileW, y * tileH, tileW, tileH);
+          break;
+        case tileDarkKnight:
+          ctx.drawImage(floor, x * tileW, y * tileH, tileW, tileH);
+          ctx.drawImage(darkKnightImg, x * tileW, y * tileH, tileW, tileH);
+          break;
         case tileZenos:
           ctx.drawImage(floor, x * tileW, y * tileH, tileW, tileH);
           ctx.drawImage(zenosImg, x * tileW, y * tileH, tileW, tileH);
@@ -207,7 +250,18 @@ function drawGame() {
   ctx.fillStyle = "#ff0000";
   ctx.fillText("FPS: " + framesLastSecond, 10, 20);
   
+  let hPoints  = document.getElementById('lifepoints');
+  hPoints.innerHTML = player.health
+  
+  let atkPoints  = document.getElementById('atkpower');
+  atkPoints.innerHTML = player.attack
+  
+  let defPoints  = document.getElementById('defpower');
+  defPoints.innerHTML = player.defense
 
+  let keyCounter  = document.getElementById('keys');
+  keyCounter.innerHTML = player.keys
+  
   lastFrameTime = currentFrameTime;
   requestAnimationFrame(drawGame);
 }

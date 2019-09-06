@@ -36,9 +36,34 @@ class Zombie extends Enemy {
   }
 }
 
+
+class Wizard extends Enemy {
+  constructor(x, y){
+    super(200, 50, 20);
+    this.tileX = x;
+    this.tileY = y;
+  }
+}
+
+class Knight extends Enemy {
+  constructor(x, y){
+    super(300, 60, 40);
+    this.tileX = x;
+    this.tileY = y;
+  }
+}
+
+class DarkKnight extends Enemy {
+  constructor(x, y){
+    super(400, 70, 35);
+    this.tileX = x;
+    this.tileY = y;
+  }
+}
+
 class Zenos extends Enemy {
   constructor(x, y){
-    super(450, 60, 30);
+    super(450, 80, 40);
     this.tileX = x;
     this.tileY = y;
   }

@@ -1,3 +1,4 @@
+
 class Character {
   constructor(health, attack, defense) {
     this.health = health;
@@ -12,8 +13,9 @@ class Character {
     this.timeMoved = 0;
     this.delayMove = 300;
     this.keys = 0;
+    this.sword = false;
     }
-  
+
   get getHealth(){
     return this.health;
   }
