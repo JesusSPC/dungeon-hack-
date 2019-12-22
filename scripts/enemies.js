@@ -55,7 +55,7 @@ class Knight extends Enemy {
 
 class DarkKnight extends Enemy {
   constructor(x, y){
-    super(400, 70, 35);
+    super(300, 60, 45);
     this.tileX = x;
     this.tileY = y;
   }
@@ -63,7 +63,7 @@ class DarkKnight extends Enemy {
 
 class Zenos extends Enemy {
   constructor(x, y){
-    super(450, 80, 40);
+    super(10, 80, 40);
     this.tileX = x;
     this.tileY = y;
   }

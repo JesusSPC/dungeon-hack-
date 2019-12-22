@@ -1,6 +1,6 @@
 let ctx ;
-let tileW = 50;
-let tileH = 50;
+let tileW = 60;
+let tileH = 60;
 let mapW = 16;
 let mapH = 16;
 

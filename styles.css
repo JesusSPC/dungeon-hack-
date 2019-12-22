@@ -11,18 +11,15 @@
 body {
   overflow: hidden;
   background-color: black;
-
 }
 
 #gamebar{
-  width: 1049.59px;
-  height: 800px;
   display: flex;
 }
 
 #sidebar{
 
-height: 800px;
+height: 1000px;
 }
 
 #stats{
@@ -35,16 +32,16 @@ height: 800px;
 
 .list{
   position: relative;
-  line-height: 48px;
-  left: 100px;
-  top: 105px;
+  line-height: 60px;
+  left: 120px;
+  top: 130px;
 
 }
 
 #name {
   position: relative;
   bottom: 16px;
-  right: 40px;
+  right: 35px;
 }
 
 #imagen {

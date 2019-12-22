@@ -1,18 +1,3 @@
-// let intervalId = setInterval(() => {
-//   ctx = document.getElementById("fondos").getContext("2d");
-//   ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
-//   ctx.drawImage(background, 0, 0, window.innerWidth, window.innerHeight);
-//   document.body.onkeypress = function(e){
-//   if(e.keyCode == 32){
-//     ctx = document.getElementById('game').getContext('2d');
-//     requestAnimationFrame(drawGame);
-//     ctx.font = "bold 10pt sans-serif";
-//     clearInterval(intervalId);
-//   }
-// }
-// }, 10)
-
-
 function drawGame() {
 
   if (ctx == null) {

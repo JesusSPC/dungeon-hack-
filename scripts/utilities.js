@@ -1,7 +1,11 @@
+
 function borrarFondo(){
+  backgroundMusic.pause()
   let fondoImagen = document.querySelector("#fondo")
   fondoImagen.parentNode.removeChild(fondoImagen);
 }
+
+
 
 function toIndex(x, y){
   return ((y * mapW) + x);
@@ -54,6 +58,7 @@ function takeBlueStone(){
 
 function getSword(){
   swordSound.play()
+  player.attack += 20;
   player.sword = true;
 }
 
@@ -176,6 +181,9 @@ function combatRight(){
     console.log(`Sir Boolean: ${player.health} HP`)
   }
 }
+
+let backgroundMusic = new Audio()
+backgroundMusic.src = "./sounds/startmusic.mp3"
 
 let swordSound = new Audio()
 swordSound.src = "./sounds/sword.wav"
